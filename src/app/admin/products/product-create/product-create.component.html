@@ -1,0 +1,85 @@
+<div class="row">
+        <div class="col-md-12">
+                <h4 class="remove-margin">Add Product </h4>
+                <div class="card">
+                  <div class="card-header">
+                    <!-- <h5 class="card-name">Edit Profile</h5> -->
+                  </div>
+                  <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="registerProduct()">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="exampleInputName1">Name</label>
+                              <input formControlName="name" class="form-control" placeholder="name" required>
+
+                              <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                                      class="form-text text-muted">
+                                    <div *ngIf="name.errors?.required">
+                                      name is required.
+                                    </div>
+                                    <div *ngIf="name.errors?.minlength">
+                                      name must be at least 2 characters long.
+                                    </div>
+                                    <div *ngIf="name.errors?.maxlength">
+                                      name must have less than 11 characters.
+                                    </div>
+                                    <div *ngIf="name.errors?.pattern">
+                                      name can only have alphanumeric characters
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="exampleInputValue1">Value</label>
+                              <input formControlName="value" class="form-control" placeholder="value" required type="number" min="1">
+
+                              <div *ngIf="value.invalid && (value.dirty || value.touched)"
+                                      class="form-text text-muted">
+                                    <div *ngIf="value.errors?.required">
+                                      value is required.
+                                    </div>
+                                    <div *ngIf="value.errors?.pattern">
+                                      value can only have numbers higher than cero
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="exampleInputdescription1">description</label>
+                              <input formControlName="description" class="form-control" placeholder="description" required>
+
+                              <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                                      class="form-text text-muted">
+                                    <div *ngIf="description.errors?.required">
+                                      description is required.
+                                    </div>
+                                    <div *ngIf="description.errors?.minlength">
+                                      description must be at least 10 characters long.
+                                    </div>
+                                    <div *ngIf="description.errors?.maxlength">
+                                      description must have less than 501 characters.
+                                    </div>
+                                    <div *ngIf="description.errors?.pattern">
+                                      description can only have alphanumeric characters
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round" [disabled]="!registerForm.valid">Register</button>
+                          </div>
+                        </div>
+                      </form>
+                  </div>
+                </div>
+              </div>
+</div>
