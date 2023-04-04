@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductRestService } from '../product-rest.service';
+import { AttributeRestService } from '../../attributes/attribute-rest.service';
 import { FormGroup, FormControlName, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -10,13 +11,24 @@ import { FormGroup, FormControlName, Validators, FormControl } from '@angular/fo
 })
 export class ProductViewComponent implements OnInit {
   productList: Array<object> = [];
+  attributeList: Array<object> = [];
   serverErrors = [];
+  producAttributes = [];
+  producAttributesAux = [];
   registerForm: FormGroup
-  constructor(private route: ActivatedRoute, private productRest: ProductRestService, private router: Router) { }
+  espAttribute = '';
+  productAttribute = '';
+  generalColor = [];
+  generalSize = [];
+  generalFactory = [];
+  generalBranch = [];
+
+  constructor(private route: ActivatedRoute, private productRest: ProductRestService, private attributeRest: AttributeRestService, private router: Router) { }
 
   ngOnInit() {
     let id = this.route.snapshot.params.id;
     this.loadProducts();
+    this.loadAttributes();
       this.productRest.getProduct(id).subscribe(
        (response) => {
          console.log(response)
@@ -49,5 +61,43 @@ export class ProductViewComponent implements OnInit {
       (response) => { console.log(this.productList = response["product"]); },
       (error) => { console.log(error) }
      );
+  }
+
+  loadAttributes() {
+    this.attributeRest.getAttributes().subscribe(
+      (response) => { console.log(this.attributeList = response["attribute"]); },
+      (error) => { console.log(error) }
+     );
+  }
+
+  addAttribute() {
+    console.log(this.espAttribute, this.productAttribute);
+    let attType = '';
+    Object.keys(this.attributeList).forEach((key: string) => {
+      if(this.attributeList[key].name == this.productAttribute){
+        console.log(this.attributeList[key]);
+        attType = this.attributeList[key].type;
+      }
+    });
+    if(attType == 'color'){
+      this.generalColor.push(this.productAttribute + ' ' + this.espAttribute);
+    }else if(attType == 'size'){
+      this.generalSize.push(this.productAttribute + ' ' + this.espAttribute);
+    }else if(attType == 'factory'){
+      this.generalFactory.push(this.productAttribute + ' ' + this.espAttribute);
+    }else if(attType == 'branch'){
+      this.generalBranch.push(this.productAttribute + ' ' + this.espAttribute);
+    }
+
+    console.log(this.generalColor)
+    console.log(this.generalSize)
+
+    this.producAttributes[this.producAttributes.length] = {
+      'color':  this.generalColor[this.generalColor.length - 1],
+      'branch': this.generalBranch[this.generalBranch.length - 1],
+      'size': this.generalSize[this.generalSize.length - 1],
+      'factory': this.generalFactory[this.generalFactory.length - 1]
+    }
+    console.log(this.producAttributes);
   }
 }

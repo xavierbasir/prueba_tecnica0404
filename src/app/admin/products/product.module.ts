@@ -8,13 +8,15 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductRestService } from './product-rest.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProductIndexComponent, ProductCreateComponent, ProductEditComponent, ProductViewComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     ProductRestService
